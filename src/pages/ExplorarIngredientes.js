@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import fetchExploreIngredients from '../services/fetchExploreIngredients';
 import fetchFilterByIngredient from '../services/fetchFilterByIngredient';
 import Context from '../context';
+import '../css/ExplorarIngredientes.css';
 
 function ExplorarIngredientes({ match }) {
   const { setFilteredMeals, setFilteredDrinks } = useContext(Context);
@@ -42,37 +43,47 @@ function ExplorarIngredientes({ match }) {
         tela="Explorar Ingredientes"
         showSearch={ false }
       />
-      {ingredients.filter((ingredient, index) => index < NUM_INGREDIENTS)
-        .map((ingredient, index) => {
-          const to = isMeal ? '/comidas/' : '/bebidas/';
-          const title = isMeal ? ingredient.strIngredient : ingredient.strIngredient1;
-          const thumb = isMeal ? `https://www.themealdb.com/images/ingredients/${ingredient.strIngredient}-Small.png`
-            : `https://www.thecocktaildb.com/images/ingredients/${ingredient.strIngredient1}-Small.png`;
+      <div className="countainerIng d-flex flex-wrap justify-content-around p-2 mb-5">
+        {ingredients.filter((ingredient, index) => index < NUM_INGREDIENTS)
+          .map((ingredient, index) => {
+            const to = isMeal ? '/comidas/' : '/bebidas/';
+            const title = isMeal ? ingredient.strIngredient : ingredient.strIngredient1;
+            const thumb = isMeal ? `https://www.themealdb.com/images/ingredients/${ingredient.strIngredient}-Small.png`
+              : `https://www.thecocktaildb.com/images/ingredients/${ingredient.strIngredient1}-Small.png`;
 
-          return (
-            <Link
-              key={ title }
-              to={ to }
-              onClick={ () => handleOnClick(title) }
-            >
-
-              <section
-                data-testid={ `${index}-ingredient-card` }
+            return (
+              <Link
                 key={ title }
-
+                to={ to }
+                onClick={ () => handleOnClick(title) }
               >
-                <img
-                  src={ thumb }
-                  data-testid={ `${index}-card-img` }
-                  className="img-fluid"
-                  alt={ title }
-                />
-                <h2 data-testid={ `${index}-card-name` }>{ title }</h2>
-              </section>
 
-            </Link>
-          );
-        })}
+                <section
+                  className="cardIng d-flex flex-column"
+                  data-testid={ `${index}-ingredient-card` }
+                  key={ title }
+
+                >
+                  <div className="imgContainer d-flex flex-column rounded">
+                    <img
+                      src={ thumb }
+                      data-testid={ `${index}-card-img` }
+                      className="img-fluid"
+                      alt={ title }
+                    />
+                  </div>
+                  <h2
+                    className="titleCardIngredientes"
+                    data-testid={ `${index}-card-name` }
+                  >
+                    { title }
+                  </h2>
+                </section>
+
+              </Link>
+            );
+          })}
+      </div>
       <Footer />
     </div>
   );

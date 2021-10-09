@@ -18,7 +18,7 @@ function Recipes({ match }) {
     return (
       <>
         <Categories isMeal={ isMeal } />
-        <div className="d-flex flex-wrap justify-content-around mx-1">
+        <div className="d-flex flex-wrap justify-content-around mx-1 mb-5 p-1">
           <RecipeList isMeal={ isMeal } />
         </div>
       </>);

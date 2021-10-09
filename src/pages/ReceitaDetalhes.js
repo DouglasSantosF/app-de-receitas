@@ -31,9 +31,9 @@ function ReceitaDetalhes({ match }) {
     <div className="d-flex flex-column">
       <Img meal={ isMeal } recipe={ recipe } />
       <div className="d-flex justify-content-between">
-        <div className="ml-2 titleDisplay">
+        <div className="ml-2 mt-1 titleDisplay">
           <h1
-            className="pb-0 mb-0"
+            className="pb-0 mb-0 titleDetalhes"
             data-testid="recipe-title"
           >
             {isMeal ? recipe.strMeal : recipe.strDrink}

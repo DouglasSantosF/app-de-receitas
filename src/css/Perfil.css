@@ -1,0 +1,30 @@
+.explorar-divPerf {
+  height: 85vh;
+}
+
+.countainer-ButtonsPerf {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 310px;
+}
+
+.countainer-ButtonsPerf button {
+  background-color: rgb(151, 52, 85);
+  border-radius: 8px;
+  box-shadow: gray 3px 3px 3px;
+  border-style: none;
+  color: aliceblue;
+  font-size: larger;
+  font-weight: 600;
+  height: 70px;
+  width: 290px;
+}
+
+.countainer-ButtonsPerf button:hover {
+  color: rgb(201, 201, 49);
+}
+
+.fontPerf {
+  font-weight: 600;
+}

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import fetchExploreRandom from '../services/fetchExploreRandom';
+import '../css/ExplorarReceitas.css';
 
 function ExplorarReceitas({ match, history }) {
   const [randomRecipe, setRandomRecipe] = useState({});
@@ -33,38 +34,41 @@ function ExplorarReceitas({ match, history }) {
         tela={ isMeal ? 'Explorar Comidas' : 'Explorar Bebidas' }
         showSearch={ false }
       />
-      <Link
-        to={ isMeal ? '/explorar/comidas/ingredientes'
-          : '/explorar/bebidas/ingredientes' }
-      >
-        <button
-          data-testid="explore-by-ingredient"
-          type="button"
-        >
-          Por Ingredientes
-        </button>
-      </Link>
-      {
-        !isMeal ? '' : (
-          <Link to="/explorar/comidas/area">
+      <div className="explorar-div d-flex flex-column align-items-center mt-5">
+        <div className="countainer-Buttons2">
+          <Link
+            to={ isMeal ? '/explorar/comidas/ingredientes'
+              : '/explorar/bebidas/ingredientes' }
+          >
             <button
-              className="areaButton"
-              data-testid="explore-by-area"
+              data-testid="explore-by-ingredient"
               type="button"
             >
-              Por Local de Origem
-
+              Por Ingredientes
             </button>
           </Link>
-        )
-      }
-      <button
-        data-testid="explore-surprise"
-        type="button"
-        onClick={ handleClickSurprise }
-      >
-        Me Surpreenda!
-      </button>
+          {
+            !isMeal ? '' : (
+              <Link to="/explorar/comidas/area">
+                <button
+                  className="areaButton"
+                  data-testid="explore-by-area"
+                  type="button"
+                >
+                  Por Local de Origem
+                </button>
+              </Link>
+            )
+          }
+          <button
+            data-testid="explore-surprise"
+            type="button"
+            onClick={ handleClickSurprise }
+          >
+            Me Surpreenda!
+          </button>
+        </div>
+      </div>
       <Footer />
     </div>
   );

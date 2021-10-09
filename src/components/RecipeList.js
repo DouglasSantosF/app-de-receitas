@@ -39,7 +39,7 @@ function RecipeList({ isMeal }) {
               />
               <div
                 className="titleField d-flex align-items-center
-                  justify-content-center flex-wrap"
+                    justify-content-center flex-wrap"
               >
                 <h2
                   data-testid={ `${idx}-card-name` }

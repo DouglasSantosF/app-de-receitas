@@ -4,7 +4,8 @@
 }
 
 .titleDisplay {
-  height: 70px;
+  height: 120px;
+  width: 270px;
   margin-bottom: 20px;
 }
 
@@ -14,4 +15,8 @@
 
 .titleDisplay h5 {
   color: rgb(80, 102, 110);
+}
+
+.titleDetalhes {
+  font-size: 30px;
 }

@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import Context from '../context';
 import fetchExploreArea from '../services/fetchExploreArea';
 import fetchAreaCategories from '../services/fetchAreaCategories';
+import '../css/ExplorarOrigem.css';
 
 function ExplorarOrigem() {
   const { filteredMeals, filteredByArea, setFilteredByArea } = useContext(Context);
@@ -36,10 +37,10 @@ function ExplorarOrigem() {
   return (
     <div>
       <Header tela="Explorar Origem" />
-      <div>
-        {' '}
-        Selecione um filtro por local de origem:
+      <div className=" p-3">
+        <h5>Selecione um filtro por local de origem:</h5>
         <select
+          className="selectOrigem select border border-danger rounded"
           data-testid="explore-by-area-dropdown"
           onChange={ ({ target }) => handleOnChange({ target }) }
         >
@@ -56,29 +57,40 @@ function ExplorarOrigem() {
             ))}
         </select>
       </div>
-      {filteredByArea
-        .filter((_recipe, idx) => idx < NUM_RECIPES)
-        .map((recipe, idx) => {
-          const id = recipe.idMeal;
-          const to = '/comidas/';
-          const title = recipe.strMeal;
-          const thumb = recipe.strMealThumb;
+      <div className="d-flex flex-wrap justify-content-around mb-5 p-2">
+        {filteredByArea
+          .filter((_recipe, idx) => idx < NUM_RECIPES)
+          .map((recipe, idx) => {
+            const id = recipe.idMeal;
+            const to = '/comidas/';
+            const title = recipe.strMeal;
+            const thumb = recipe.strMealThumb;
 
-          return (
-            <Link key={ id } to={ `${to}${id}` }>
-              <section key={ title } data-testid={ `${idx}-recipe-card` }>
-                <h2 data-testid={ `${idx}-card-name` }>{title}</h2>
-                <img
-                  src={ thumb }
-                  data-testid={ `${idx}-card-img` }
-                  className="img-fluid"
-                  alt={ title }
-                />
-              </section>
-            </Link>
-          );
-        }) }
-
+            return (
+              <Link key={ id } to={ `${to}${id}` }>
+                <section
+                  className="cardOrigem"
+                  key={ title }
+                  data-testid={ `${idx}-recipe-card` }
+                >
+                  <img
+                    src={ thumb }
+                    data-testid={ `${idx}-card-img` }
+                    className="img-fluid rounded"
+                    alt={ title }
+                  />
+                  <h2
+                    className="titleOrigem"
+                    data-testid={ `${idx}-card-name` }
+                  >
+                    {title}
+                  </h2>
+                </section>
+              </Link>
+            );
+          }) }
+      </div>
+      <div />
       <Footer />
     </div>
   );

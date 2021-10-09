@@ -1,10 +1,8 @@
 .removeStyle {
   border: none;
-}
-
-.btn-test {
   width: 360px;
-
   display: flex;
-  justify-content:center;
+  flex-direction: column;
+  align-items:stretch;
 }
+
