@@ -32,6 +32,7 @@ function FavoriteBtn({ recipe, index, removeFavorite }) {
 
   return (
     <input
+      className="ml-2"
       type="image"
       src={ clicked ? blackHeartIcon : whiteHeartIcon }
       alt="Ícone de compartilhar"
