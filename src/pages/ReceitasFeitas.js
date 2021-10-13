@@ -1,39 +1,43 @@
-import React, { useState } from 'react';
+import React, { useEffect, useContext } from 'react';
 import Header from '../components/Header';
 import FilterTypesButtons from '../components/FilterTypesButtons';
 import FilteredCards from '../components/FilteredCards';
-
-// PRECISA DE LOADING PRA SO RODAR O MAP QUANDO O ARRAY CARREGAR OS ITENS DO STORAGE
-
-// url = ${type}/${id}
+import Context from '../context';
 
 if (!localStorage.doneRecipes) {
   const arrayDone = [];
   localStorage.setItem('doneRecipes', JSON.stringify(arrayDone));
 }
-const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+const itensDone = JSON.parse(localStorage.getItem('doneRecipes'));
 
 function ReceitasFeitas() {
-  const [recipes, setRecipes] = useState(doneRecipes);
+  const { doneRecipes, setDoneRecipes } = useContext(Context);
+
+  useEffect(() => {
+    const getRecipes = () => {
+      if (doneRecipes.length === 0) setDoneRecipes(itensDone);
+    };
+    getRecipes();
+  }, [doneRecipes.length, setDoneRecipes]);
 
   const filterType = (type) => {
     let newRecipes = doneRecipes;
     if (type === 'comida') {
-      newRecipes = doneRecipes.filter((recipe) => recipe.type === type);
-      return setRecipes(newRecipes);
+      newRecipes = itensDone.filter((recipe) => recipe.type === type);
+      return setDoneRecipes(newRecipes);
     }
     if (type === 'bebida') {
-      newRecipes = doneRecipes.filter((recipe) => recipe.type === type);
-      return setRecipes(newRecipes);
+      newRecipes = itensDone.filter((recipe) => recipe.type === type);
+      return setDoneRecipes(newRecipes);
     }
-    return setRecipes(newRecipes);
+    return setDoneRecipes(itensDone);
   };
 
   return (
     <div>
       <Header tela="Receitas Feitas" showSearch={ false } />
       <FilterTypesButtons filterType={ filterType } />
-      <FilteredCards recipes={ recipes } />
+      <FilteredCards recipes={ doneRecipes } />
     </div>
   );
 }

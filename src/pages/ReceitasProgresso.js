@@ -15,7 +15,6 @@ function ReceitasProgresso({ match }) {
   const [disabledButton, setDisabledButton] = useState(true);
   const { compareCheckBox, ingredientsLength } = useContext(Context);
   const url = match.url.split('/in')[0];
-  console.log(match.url);
 
   const { recipeId } = match.params;
 
@@ -34,8 +33,12 @@ function ReceitasProgresso({ match }) {
   const disableButton = () => {
     if (compareCheckBox !== ingredientsLength - 1) {
       setDisabledButton(true);
+      // console.log(compareCheckBox);
+      // console.log(ingredientsLength)
     } else {
       setDisabledButton(false);
+      // console.log(compareCheckBox);
+      // console.log(ingredientsLength)
     }
   };
 

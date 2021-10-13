@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import Context from '../context';
 
 function FinishButton({ disabledButton, isMeal, recipe, recipeId }) {
+  const { setDoneRecipes } = useContext(Context);
+
   // Funcao para adicionar o localStorage doneRecipes
   const handleOnClick = () => {
     if (!localStorage.doneRecipes) {
@@ -22,6 +25,7 @@ function FinishButton({ disabledButton, isMeal, recipe, recipeId }) {
       tags: '',
     };
     itemDone.push(item);
+    setDoneRecipes(itemDone);
     localStorage.setItem('doneRecipes', JSON.stringify(itemDone));
   };
 
