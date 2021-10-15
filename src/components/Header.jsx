@@ -26,7 +26,7 @@ function Header({ tela, showSearch = true }) {
             alt="Ícone Profile"
           />
         </Link>
-        <h2 data-testid="page-title">{ tela }</h2>
+        <h2 className="header-title" data-testid="page-title">{ tela }</h2>
         {
           showSearch && (
             <input

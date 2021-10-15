@@ -36,7 +36,7 @@ function Login() {
     >
       { shouldRedirect && <Redirect to="/comidas" /> }
       <form className="d-flex align-items-center flex-column justify-content-center">
-        <img className="img-login p-4" width="275px" src={ logo } alt="Logo Recipes" />
+        <img className="img-login p-5" width="275px" src={ logo } alt="Logo Recipes" />
         <input
           className="form-control"
           name="email"

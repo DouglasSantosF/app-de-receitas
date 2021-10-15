@@ -1,39 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import Header from '../components/Header';
 import FilterTypesButtons from '../components/FilterTypesButtons';
 import FilteredCards from '../components/FilteredCards';
+import Context from '../context';
 
-if (localStorage.doneRecipes.length === 0) {
+if (!localStorage.doneRecipes) {
   const arrayDone = [];
   localStorage.setItem('doneRecipes', JSON.stringify(arrayDone));
 }
-let doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+const itensDone = JSON.parse(localStorage.getItem('doneRecipes'));
 
 function ReceitasFeitas() {
-  const [recipes, setRecipes] = useState(doneRecipes);
-  const [filters, setFilters] = useState('');
+  const { doneRecipes, setDoneRecipes } = useContext(Context);
 
   useEffect(() => {
-    doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
-    if (filters === '') {
-      return setRecipes(doneRecipes);
-    }
-    doneRecipes = doneRecipes.filter((recipe) => recipe.type === filters);
-    return setRecipes(doneRecipes);
-  }, [filters]);
-
-  useEffect(() => {
-    setRecipes(doneRecipes);
-  }, [recipes]);
+    const getRecipes = () => {
+      if (doneRecipes.length === 0) setDoneRecipes(itensDone);
+    };
+    getRecipes();
+  }, [doneRecipes.length, setDoneRecipes]);
 
   const filterType = (type) => {
+    let newRecipes = doneRecipes;
     if (type === 'comida') {
-      return setFilters('comida');
+      newRecipes = itensDone.filter((recipe) => recipe.type === type);
+      return setDoneRecipes(newRecipes);
     }
     if (type === 'bebida') {
-      return setFilters('bebida');
+      newRecipes = itensDone.filter((recipe) => recipe.type === type);
+      return setDoneRecipes(newRecipes);
     }
-    return setFilters('');
+    return setDoneRecipes(itensDone);
   };
 
   return (
