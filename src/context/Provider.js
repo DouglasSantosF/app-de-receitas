@@ -22,6 +22,8 @@ function Provider({ children }) {
 
   const [filteredByArea, setFilteredByArea] = useState([]);
 
+  const [doneRecipes, setDoneRecipes] = useState([]);
+
   useEffect(() => {
     const getMeals = async () => {
       const results = await fetchMeals();
@@ -79,6 +81,10 @@ function Provider({ children }) {
 
     filteredByArea,
     setFilteredByArea,
+
+    doneRecipes,
+    setDoneRecipes,
+
   };
 
   return (

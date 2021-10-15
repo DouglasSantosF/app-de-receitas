@@ -12,10 +12,20 @@ function IngredientsList({ recipe, disableButton, isMeal, recipeId }) {
     let i = 1;
     const ingList = [];
     while (recipe[`strIngredient${i}`]) {
-      ingList.push(`${recipe[`strIngredient${i}`]}`);
+      ingList.push(`${recipe[`strIngredient${i}`]} ${recipe[`strMeasure${i}`]}`);
       i += 1;
     }
     return ingList;
+  };
+
+  const setCheckBox = (type) => {
+    let trueValues = [];
+    const itemProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (Object.keys(itemProgress[`${type}`][recipeId]).length > 0) {
+      trueValues = Object
+        .values(itemProgress[`${type}`][recipeId]).filter((value) => value === true);
+    }
+    setCompareCheckBox(trueValues.length);
   };
 
   useEffect(() => {
@@ -31,10 +41,10 @@ function IngredientsList({ recipe, disableButton, isMeal, recipeId }) {
         || itemProgress.meals[recipeId] !== undefined) {
         if (isMeal) {
           setIngredientList(itemProgress.meals[recipeId]);
-          setCompareCheckBox(itemProgress.meals[recipeId].length);
+          setCheckBox('meals');
         } else {
           setIngredientList(itemProgress.cocktails[recipeId]);
-          setCompareCheckBox(itemProgress.cocktails[recipeId].length);
+          setCheckBox('cocktails');
         }
       }
     };
@@ -51,108 +61,71 @@ function IngredientsList({ recipe, disableButton, isMeal, recipeId }) {
     getLength();
   });
 
-  // Funcao para adicionar o localStorage inProgressRecipes
-  const addInProgress = (value) => {
-    const itemProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (isMeal) {
-      localStorage.setItem('inProgressRecipes', JSON.stringify({
-        ...itemProgress,
-        meals: {
-          ...itemProgress.meals,
-          [recipeId]: [...ingredientList, value],
-        },
-      }));
-    } else {
-      localStorage.setItem('inProgressRecipes', JSON.stringify({
-        ...itemProgress,
-        cocktails: {
-          ...itemProgress.cocktails,
-          [recipeId]: [...ingredientList, value],
-        },
-      }));
-    }
-  };
+  useEffect(() => {
+    // Referencia bug fix req 50, retirado da seguinte PR da turma 12:
+    // https://github.com/tryber/sd-012-project-recipes-app/pull/697/commits/7e629baa0228d0314a1d8f2072b451004b19a011
+    // Estava tentando adicionar os ingredients, em vez de colocar apenas se a posicao do ing estava checada ou nao.
 
-  // Funcao para adicionar o localStorage inProgressRecipes
-  const removeInProgress = (index) => {
     const itemProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    ingredientList.splice(index, 1);
+    const updateInProgressStorage = (type, id, check) => {
+      const recipes = itemProgress[type];
+      localStorage.setItem('inProgressRecipes', JSON.stringify({
+        ...itemProgress,
+        [type]: { ...recipes, [id]: check },
+      }));
+    };
     if (isMeal) {
-      localStorage.setItem('inProgressRecipes', JSON.stringify({
-        ...itemProgress,
-        meals: {
-          ...itemProgress.meals,
-          [recipeId]: ingredientList,
-        },
-      }));
+      updateInProgressStorage('meals', recipeId, ingredientList);
     } else {
-      localStorage.setItem('inProgressRecipes', JSON.stringify({
-        ...itemProgress,
-        cocktails: {
-          ...itemProgress.cocktails,
-          [recipeId]: ingredientList,
-        },
-      }));
+      updateInProgressStorage('cocktails', recipeId, ingredientList);
     }
-  };
+  }, [ingredientList, isMeal, recipeId]);
 
   // Funcao de clique nos checkboxes
-  const handleCheckbox = ({ target }, index) => {
-    if (target.checked === true) {
+  function handleCheckbox({ target: { name, checked } }) {
+    setIngredientList({
+      ...ingredientList,
+      [name]: checked,
+    });
+    if (checked === true) {
       console.log(compareCheckBox);
       setCompareCheckBox(compareCheckBox + 1);
-      setIngredientList([...ingredientList, target.value]);
-      addInProgress(target.value);
-    } else if (target.checked === false) {
-      ingredientList.splice(index, 1);
-      setIngredientList(ingredientList);
+    } else if (checked === false) {
       setCompareCheckBox(compareCheckBox - 1);
-      removeInProgress(index);
     }
     disableButton();
-  };
+  }
 
-  const ingredientsArrayList = () => {
-    const itemProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    let arrayIngredients = [];
-    if (itemProgress !== null && (itemProgress.cocktails[recipeId] !== undefined
-      || itemProgress.meals[recipeId] !== undefined)) {
-      if (isMeal) {
-        arrayIngredients = itemProgress.meals[recipeId];
-      } else {
-        arrayIngredients = itemProgress.cocktails[recipeId];
-      }
-    }
-    return (
-      <div>
-        <h4>Ingredientes</h4>
-        <ul className="itensIng p-3">
-          {ingredients().map((ingredient, index) => (
-            <div
-              className="ml-3"
+  const ingredientsArrayList = () => (
+    <div>
+      <h4>Ingredientes</h4>
+      <ul>
+        {ingredients().map((ingredient, index) => (
+          <div
+            key={ index }
+          >
+            <label
+              htmlFor={ index }
               key={ ingredient }
+              data-testid={ `${index}-ingredient-step` }
             >
-              <label
-                htmlFor={ index }
-                key={ ingredient }
-                data-testid={ `${index}-ingredient-step` }
-              >
-                <input
-                  className="form-check-input"
-                  value={ ingredient }
-                  id={ index }
-                  type="checkbox"
-                  checked={ ingredient === arrayIngredients[index] }
-                  onClick={ ({ target }) => handleCheckbox({ target }, index) }
-                />
-                {ingredient}
-              </label>
-            </div>))}
-        </ul>
-      </div>
+              <input
+                className="checkboxes"
+                value={ ingredient }
+                name={ index }
+                id={ index }
+                type="checkbox"
+                checked={ ingredientList[index] ? ingredientList[index] : false }
+                onChange={ handleCheckbox }
+                // onChange={ ({ target }) => handleCheckbox({ target }, index) }
+              />
+              {ingredient}
+            </label>
+          </div>))}
+      </ul>
+    </div>
 
-    );
-  };
+  );
 
   return (
     <>

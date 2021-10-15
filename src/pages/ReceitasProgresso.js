@@ -34,8 +34,12 @@ function ReceitasProgresso({ match }) {
   const disableButton = () => {
     if (compareCheckBox !== ingredientsLength - 1) {
       setDisabledButton(true);
+      // console.log(compareCheckBox);
+      // console.log(ingredientsLength)
     } else {
       setDisabledButton(false);
+      // console.log(compareCheckBox);
+      // console.log(ingredientsLength)
     }
   };
 
