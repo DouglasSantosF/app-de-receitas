@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import '../css/Login.css';
+import logo from '../images/Logo3.png';
 
 function Login() {
   const [personData, setPersonData] = useState({
@@ -35,7 +36,7 @@ function Login() {
     >
       { shouldRedirect && <Redirect to="/comidas" /> }
       <form className="d-flex align-items-center flex-column justify-content-center">
-        <h1 className="display mb-5 pb-5">App de Receitas</h1>
+        <img className="img-login p-4" width="275px" src={ logo } alt="Logo Recipes" />
         <input
           className="form-control"
           name="email"

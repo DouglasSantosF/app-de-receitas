@@ -1,6 +1,10 @@
 .tam1 {
   background-color: #8f0e01;
-  color: #cfcfcf;
+  color: #dfdfdf;
   height: 640px;
   width: 360px;
+}
+
+.img-login {
+  border-radius: 5%;
 }

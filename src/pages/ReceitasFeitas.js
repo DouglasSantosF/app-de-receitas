@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import FilterTypesButtons from '../components/FilterTypesButtons';
 import FilteredCards from '../components/FilteredCards';
@@ -7,27 +7,51 @@ import FilteredCards from '../components/FilteredCards';
 
 // url = ${type}/${id}
 
-if (!localStorage.doneRecipes) {
+if (localStorage.doneRecipes.length === 0) {
   const arrayDone = [];
   localStorage.setItem('doneRecipes', JSON.stringify(arrayDone));
 }
-const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+let doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
 
 function ReceitasFeitas() {
   const [recipes, setRecipes] = useState(doneRecipes);
+  const [filters, setFilters] = useState('');
+
+  useEffect(() => {
+    doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+    if (filters === '') {
+      return setRecipes(doneRecipes);
+    }
+    doneRecipes = doneRecipes.filter((recipe) => recipe.type === filters);
+    return setRecipes(doneRecipes);
+  }, [filters]);
+
+  useEffect(() => {
+    setRecipes(doneRecipes);
+  }, [recipes]);
 
   const filterType = (type) => {
-    let newRecipes = doneRecipes;
     if (type === 'comida') {
-      newRecipes = doneRecipes.filter((recipe) => recipe.type === type);
-      return setRecipes(newRecipes);
+      return setFilters('comida');
     }
     if (type === 'bebida') {
-      newRecipes = doneRecipes.filter((recipe) => recipe.type === type);
-      return setRecipes(newRecipes);
+      return setFilters('bebida');
     }
-    return setRecipes(newRecipes);
+    return setFilters('');
   };
+
+  // const filterType = (type) => {
+  //   let newRecipes = doneRecipes;
+  //   if (type === 'comida') {
+  //     newRecipes = doneRecipes.filter((recipe) => recipe.type === type);
+  //     return setRecipes(newRecipes);
+  //   }
+  //   if (type === 'bebida') {
+  //     newRecipes = doneRecipes.filter((recipe) => recipe.type === type);
+  //     return setRecipes(newRecipes);
+  //   }
+  //   return setRecipes(newRecipes);
+  // };
 
   return (
     <div>

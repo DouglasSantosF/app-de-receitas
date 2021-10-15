@@ -5,9 +5,9 @@ import '../css/Img.css';
 function Img({ meal, recipe }) {
   return (
     <img
+      className="imgDetails"
       src={ meal ? recipe.strMealThumb : recipe.strDrinkThumb }
       alt={ meal ? recipe.strMeal : recipe.strDrink }
-      className="imgDetails img-fluid"
       data-testid="recipe-photo"
     />
   );
