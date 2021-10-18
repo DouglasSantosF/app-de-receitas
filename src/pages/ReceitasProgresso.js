@@ -32,14 +32,10 @@ function ReceitasProgresso({ match }) {
 
   // funcao para habilitar ou desabilitar o botao Finalizar Receita
   const disableButton = () => {
-    if (compareCheckBox !== ingredientsLength - 1) {
+    if (compareCheckBox !== ingredientsLength) {
       setDisabledButton(true);
-      // console.log(compareCheckBox);
-      // console.log(ingredientsLength)
     } else {
       setDisabledButton(false);
-      // console.log(compareCheckBox);
-      // console.log(ingredientsLength)
     }
   };
 

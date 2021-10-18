@@ -5,7 +5,7 @@ import '../css/FinishButton.css';
 import Context from '../context';
 
 function FinishButton({ disabledButton, isMeal, recipe, recipeId }) {
-  const { setDoneRecipes } = useContext(Context);
+  const { setDoneRecipes, setCompareCheckBox } = useContext(Context);
 
   // Funcao para adicionar o localStorage doneRecipes
   const handleOnClick = () => {
@@ -27,6 +27,7 @@ function FinishButton({ disabledButton, isMeal, recipe, recipeId }) {
     };
     itemDone.push(item);
     setDoneRecipes(itemDone);
+    setCompareCheckBox(0);
     localStorage.setItem('doneRecipes', JSON.stringify(itemDone));
   };
 

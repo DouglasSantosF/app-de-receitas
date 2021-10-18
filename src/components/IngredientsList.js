@@ -8,6 +8,10 @@ function IngredientsList({ recipe, disableButton, isMeal, recipeId }) {
   const { compareCheckBox, setCompareCheckBox,
     setIngredientsLength } = useContext(Context);
 
+  useEffect(() => {
+    disableButton();
+  }, [compareCheckBox, disableButton]);
+
   const ingredients = () => {
     let i = 1;
     const ingList = [];
@@ -87,13 +91,11 @@ function IngredientsList({ recipe, disableButton, isMeal, recipeId }) {
       ...ingredientList,
       [name]: checked,
     });
-    if (checked === true) {
-      console.log(compareCheckBox);
+    if (checked) {
       setCompareCheckBox(compareCheckBox + 1);
-    } else if (checked === false) {
+    } else {
       setCompareCheckBox(compareCheckBox - 1);
     }
-    disableButton();
   }
 
   const ingredientsArrayList = () => (
@@ -115,9 +117,8 @@ function IngredientsList({ recipe, disableButton, isMeal, recipeId }) {
                 name={ index }
                 id={ index }
                 type="checkbox"
-                checked={ ingredientList[index] ? ingredientList[index] : false }
+                checked={ ingredientList[index] }
                 onChange={ handleCheckbox }
-                // onChange={ ({ target }) => handleCheckbox({ target }, index) }
               />
               {ingredient}
             </label>

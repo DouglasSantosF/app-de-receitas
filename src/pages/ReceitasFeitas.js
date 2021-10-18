@@ -1,43 +1,46 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import FilterTypesButtons from '../components/FilterTypesButtons';
 import FilteredCards from '../components/FilteredCards';
-import Context from '../context';
 
 if (!localStorage.doneRecipes) {
   const arrayDone = [];
   localStorage.setItem('doneRecipes', JSON.stringify(arrayDone));
 }
-const itensDone = JSON.parse(localStorage.getItem('doneRecipes'));
+let itensDone = JSON.parse(localStorage.getItem('doneRecipes'));
 
 function ReceitasFeitas() {
-  const { doneRecipes, setDoneRecipes } = useContext(Context);
+  const [recipes, setRecipes] = useState(itensDone);
+  const [filters, setFilters] = useState('');
 
   useEffect(() => {
-    const getRecipes = () => {
-      if (doneRecipes.length === 0) setDoneRecipes(itensDone);
-    };
-    getRecipes();
-  }, [doneRecipes.length, setDoneRecipes]);
+    itensDone = JSON.parse(localStorage.getItem('doneRecipes'));
+    if (filters === '') {
+      return setRecipes(itensDone);
+    }
+    itensDone = itensDone.filter((recipe) => recipe.type === filters);
+    return setRecipes(itensDone);
+  }, [filters]);
+
+  useEffect(() => {
+    setRecipes(itensDone);
+  }, [recipes]);
 
   const filterType = (type) => {
-    let newRecipes = doneRecipes;
     if (type === 'comida') {
-      newRecipes = itensDone.filter((recipe) => recipe.type === type);
-      return setDoneRecipes(newRecipes);
+      return setFilters('comida');
     }
     if (type === 'bebida') {
-      newRecipes = itensDone.filter((recipe) => recipe.type === type);
-      return setDoneRecipes(newRecipes);
+      return setFilters('bebida');
     }
-    return setDoneRecipes(itensDone);
+    return setFilters('');
   };
 
   return (
     <div>
       <Header tela="Receitas Feitas" showSearch={ false } />
       <FilterTypesButtons filterType={ filterType } />
-      <FilteredCards recipes={ doneRecipes } />
+      <FilteredCards recipes={ recipes } />
     </div>
   );
 }
