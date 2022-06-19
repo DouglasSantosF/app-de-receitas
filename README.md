@@ -8,9 +8,11 @@
 
 Este projeto foi importante pois nele tivemos que testar diversas funcionalidades, desde a criação de rotas, tela de login, histórico de receitas, botão de favoritar as receitas, menu sugestível que fica deslizando as opções de receitas, colocamos o player de vídeo na receita, além de fazer um projeto em grupo. Utilizamos a metodologia ágil Kanban, e trabalhamos em pair programming, desta maneira pudemos compartilhar conhecimentos entre o grupo, ajudar a tirar dúvidas e assim aprender bastante durante o desenvolvimento.
 
+<br>
 
+**OBS**: ele foi desenvolvido para resolução mobile (360 x 640), caso queira ver ele em seu navegador, mude a resolução da tela, no google chrome, apertando a **tecla F12**, vai abrir o **modo inspecionar**, após isso aperte as teclas **CTRL + SHIFT + M**, o navegador vai pro modo responsivo, onde no topo da tela, é possível por a resolução desejada.
 
-### ** Algumas das Tecnologias utilizadas**
+### **Algumas das Tecnologias utilizadas**
 ---
 ---
 
@@ -87,3 +89,4 @@ Caso queira clonar para rodar localmente, após dar o gitclone em sua máquina, 
 ---
 <br>
 
+https://app-de-receitas-vercel.vercel.app/
