@@ -1,5 +1,5 @@
 
-# App de Receitas
+# Recipes Hunter
 
 #### Este foi o projeto final do módulo de Front-End da **Trybe**, O projeto foi desenvolvido em grupo, onde tinhamos que acessar uma api de receitas, e criar uma aplicação onde o usuário poderia pesquisar por diversas receitas, favoritas suas receitas favoritas, sejam de comidas ou bebidas, marcar as etapas da receita escolhida que já foram concluídas e muitos mais. Ele foi projetado para a resolução mobile. testamos nossos conhecimentos  em **React**, **Javascript**, **CSS**, **manipulação de componentes**, **Manipulação de estado através do context API**, **Manipulação do local storage**, **Manipulação de rotas** e **Desenvolver um código em grupo**. 
 
